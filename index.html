@@ -1,86 +1,160 @@
 <!doctype html>
 <html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#1976d2" />
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="IPNow" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <meta name="color-scheme" content="light dark" />
-  <meta name="theme-color" content="#1976d2" />
-  <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-title" content="IP 网络工具" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <title>IP 查询与网络诊断</title>
-  <meta name="description" content="IP 查询、网站分流、WebRTC 检测、全球 Ping、服务状态和 WHOIS 查询工具。" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <script>
-    // Classic ES5 script: IE cannot execute the application's module bundle.
-    (function () {
-      var root = document.documentElement;
-      // Fallback only: production must also send frame-ancestors / X-Frame-Options.
-      if (window.self !== window.top) {
-        root.className = "embedded-browser";
-        return;
+    <!-- SEO: 标题与描述 -->
+    <title>IP 查询 - 我的 IP 地址、WebRTC 检测、全球 Ping、WHOIS | IPNow</title>
+    <meta
+      name="description"
+      content="IPNow 是免费的在线 IP 查询与网络诊断工具：查看我的 IP 地址、归属地、ASN 与信誉，检测 WebRTC、DNS/CDN 出口、网站分流，支持全球 Ping、WHOIS 查询，并提供浏览器指纹与 AI 服务连通性检测。"
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://ipnow.us.ci/" />
+
+    <!-- SEO: 分享预览（微信、Telegram、Twitter 等） -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="IPNow" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:url" content="https://ipnow.us.ci/" />
+    <meta property="og:title" content="IP 查询 - 我的 IP 地址、WebRTC 检测、全球 Ping、WHOIS | IPNow" />
+    <meta
+      property="og:description"
+      content="免费在线 IP 查询与网络诊断工具：IP 归属地、ASN、信誉、WebRTC、DNS/CDN、全球 Ping、WHOIS、浏览器指纹。"
+    />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="IP 查询 - 我的 IP 地址、WebRTC 检测、全球 Ping、WHOIS | IPNow" />
+    <meta
+      name="twitter:description"
+      content="免费在线 IP 查询与网络诊断工具：IP 归属地、ASN、信誉、WebRTC、DNS/CDN、全球 Ping、WHOIS、浏览器指纹。"
+    />
+
+    <!-- 站长验证位置：以后在 Google Search Console 或 Bing 拿到验证代码后，
+         我会告诉你怎么把代码加在这里。现在先不用管这一段。 -->
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- SEO: 结构化数据，帮助搜索引擎理解这是一个网页工具 -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "IPNow",
+        "url": "https://ipnow.us.ci/",
+        "description": "免费在线 IP 查询与网络诊断工具：IP 归属地、ASN、信誉、WebRTC、DNS/CDN、全球 Ping、WHOIS、浏览器指纹与 AI 服务连通性检测。",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "inLanguage": "zh-CN",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
       }
-      if (document.documentMode || /MSIE|Trident/.test(navigator.userAgent)) {
-        root.className = "unsupported-browser";
-        return;
+    </script>
+
+    <script>
+      // Classic ES5 script: IE cannot execute the application's module bundle.
+      (function () {
+        var root = document.documentElement;
+        // Fallback only: production must also send frame-ancestors / X-Frame-Options.
+        if (window.self !== window.top) {
+          root.className = "embedded-browser";
+          return;
+        }
+        if (document.documentMode || /MSIE|Trident/.test(navigator.userAgent)) {
+          root.className = "unsupported-browser";
+          return;
+        }
+        try {
+          var theme = localStorage.getItem("theme") || "system";
+          var dark = theme === "dark" || (theme !== "light" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+          root.classList.toggle("dark", dark);
+          root.style.colorScheme = dark ? "dark" : "light";
+          ["color", "radius", "layout", "font-size"].forEach(function (key) {
+            var value = localStorage.getItem("ui-" + key);
+            if (value && value !== "default") root.setAttribute("data-" + key, value);
+          });
+        } catch (error) {
+          // Keep the page usable when browser storage is unavailable.
+        }
+      })();
+    </script>
+    <style>
+      html {
+        touch-action: manipulation;
+        -webkit-text-size-adjust: 100%;
       }
-      try {
-        var theme = localStorage.getItem("theme") || "system";
-        var dark = theme === "dark" || (theme !== "light" && window.matchMedia("(prefers-color-scheme: dark)").matches);
-        root.classList.toggle("dark", dark);
-        root.style.colorScheme = dark ? "dark" : "light";
-        ["color", "radius", "layout", "font-size"].forEach(function (key) {
-          var value = localStorage.getItem("ui-" + key);
-          if (value && value !== "default") root.setAttribute("data-" + key, value);
-        });
-      } catch (error) {
-        // Keep the page usable when browser storage is unavailable.
+      .embedded-browser body {
+        display: none !important;
       }
-    })();
-  </script>
-  <style>
-    html {
-      touch-action: manipulation;
-      -webkit-text-size-adjust: 100%;
-    }
+      #unsupported-browser {
+        display: none;
+      }
+      .unsupported-browser #root {
+        display: none;
+      }
+      .unsupported-browser #unsupported-browser {
+        display: block;
+        max-width: 640px;
+        margin: 80px auto;
+        padding: 24px;
+        font-family: sans-serif;
+        line-height: 1.8;
+        color: #171717;
+        background: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="unsupported-browser" role="alert">
+      <h1>不支持 Internet Explorer</h1>
+      <p>请使用最新版 Microsoft Edge、Google Chrome、Firefox 或 Safari 访问本站。</p>
+      <a href="https://www.microsoft.com/edge">下载 Microsoft Edge</a>
+    </div>
 
-    .embedded-browser body {
-      display: none !important;
-    }
+    <!-- SEO: 给不执行 JavaScript 的搜索引擎和爬虫看的内容。
+         正常浏览器不会显示这一段。 -->
+    <noscript>
+      <h1>IPNow - 在线 IP 查询与网络诊断工具</h1>
+      <p>
+        请启用 JavaScript，并使用现代浏览器访问本站。IPNow
+        提供免费的 IP 地址查询与网络诊断：查看我的 IP 地址、归属地、运营商、ASN 与信誉，检测 WebRTC、DNS 与 CDN
+        出口、网站分流与连通性，支持全球 Ping、WHOIS 查询，以及浏览器指纹、环境一致性和自动化特征检测，并可查看主流 AI
+        服务的访问状态。
+      </p>
+      <nav>
+        <h2>网络工具</h2>
+        <ul>
+          <li><a href="/network/ip">IP 详情查询</a></li>
+          <li><a href="/network/connectivity">网站分流与连通性检测</a></li>
+          <li><a href="/network/dns">DNS 检测</a></li>
+          <li><a href="/network/cdn">CDN 检测</a></li>
+          <li><a href="/network/whois">WHOIS 查询</a></li>
+          <li><a href="/network/ping">全球 Ping</a></li>
+          <li><a href="/network/subdomains">子域名查询</a></li>
+        </ul>
+        <h2>浏览器检测</h2>
+        <ul>
+          <li><a href="/browser/environment">浏览器环境检测</a></li>
+          <li><a href="/browser/fingerprint">浏览器指纹检测</a></li>
+          <li><a href="/browser/consistency">环境一致性检测</a></li>
+          <li><a href="/browser/automation">自动化特征检测</a></li>
+          <li><a href="/browser/privacy">隐私检测</a></li>
+        </ul>
+        <h2>其他</h2>
+        <ul>
+          <li><a href="/ai/">AI 服务访问检测</a></li>
+          <li><a href="/status/">服务状态</a></li>
+        </ul>
+      </nav>
+    </noscript>
 
-    #unsupported-browser {
-      display: none;
-    }
-
-    .unsupported-browser #root {
-      display: none;
-    }
-
-    .unsupported-browser #unsupported-browser {
-      display: block;
-      max-width: 640px;
-      margin: 80px auto;
-      padding: 24px;
-      font-family: sans-serif;
-      line-height: 1.8;
-      color: #171717;
-      background: #fff;
-    }
-  </style>
-</head>
-
-<body>
-  <div id="unsupported-browser" role="alert">
-    <h1>不支持 Internet Explorer</h1>
-    <p>请使用最新版 Microsoft Edge、Google Chrome、Firefox 或 Safari 访问本站。</p>
-    <a href="https://www.microsoft.com/edge">下载 Microsoft Edge</a>
-  </div>
-  <noscript>请启用 JavaScript，并使用现代浏览器访问本站。</noscript>
-  <div id="root"></div>
-  <script type="module" src="/src/main.tsx"></script>
-</body>
-
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
